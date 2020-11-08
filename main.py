@@ -9,7 +9,7 @@ from google.cloud import storage
 
 language_client = language_v1.LanguageServiceClient.from_service_account_file("credentials.json")
 storage_client = storage.Client.from_service_account_json("credentials.json")
-bucket = storage_client.get_bucket('slackbot-288310.appspot.com')
+bucket = storage_client.get_bucket('slack_bot_storage')
 
 
 def do_post(e: requests) -> str:
@@ -55,7 +55,7 @@ def do_post(e: requests) -> str:
                     },
                     {
                         "type": "image",
-                        "image_url": "https://storage.googleapis.com/slackbot-288310.appspot.com/wc_image_ja.png",
+                        "image_url": "https://storage.googleapis.com/slack_bot_storage/wc_image_ja.png",
                         "alt_text": "wordCloud"
                     }
                 ]
