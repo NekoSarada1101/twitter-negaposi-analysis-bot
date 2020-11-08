@@ -69,7 +69,7 @@ def do_post(e: requests) -> str:
 
 
 def fetch_tweet_list(keyword: str) -> list:
-    max_results = 10  # type: int
+    max_results = 100  # type: int
     endpoint_url = "https://api.twitter.com/2/tweets/search/recent?query={}&max_results={}".format(keyword, str(
         max_results))  # type: str
     header = {  # type: dict
