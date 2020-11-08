@@ -240,4 +240,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# custom
+setting_secret.py
+credentials.json
 
