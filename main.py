@@ -52,11 +52,6 @@ def do_post(e: requests) -> str:
                             "type": "mrkdwn",
                             "text": "ネガポジ度：" + str(tweet_score)
                         }
-                    },
-                    {
-                        "type": "image",
-                        "image_url": "https://storage.googleapis.com/slack_bot_storage/wc_image_ja.png",
-                        "alt_text": "wordCloud"
                     }
                 ]
             }
@@ -65,6 +60,13 @@ def do_post(e: requests) -> str:
 
     payload = json.dumps(data).encode("utf-8")  # type: json
     requests.post(HISHO_URL, payload)
+
+    data = {
+        "token": ACCESS_TOKEN,
+        "channels": CHANNEL_ID,
+    }
+    files = {'file': open("/tmp/wc_image_ja.png", 'rb')}
+    requests.post("https://slack.com/api/files.upload", data=data, files=files)
     return ""
 
 
@@ -110,7 +112,6 @@ def create_word_cloud(noun_list: list):
     word_cloud = WordCloud(background_color="white", font_path=font_path, contour_color='steelblue', collocations=False,
                            contour_width=3, width=900, height=500, stopwords=set(stop_words)).generate(word_chain)
     word_cloud.to_file("/tmp/wc_image_ja.png")
-    upload_word_cloud_image()
 
 
 def download_font_file():
@@ -121,18 +122,6 @@ def download_font_file():
             blob = bucket.blob("ヒラギノ角ゴシック W3.ttc")
             # ファイルとしてローカルに落とす
             blob.download_to_filename("/tmp/ヒラギノ角ゴシック W3.ttc")
-        except Exception as exception:
-            print(exception)
-
-
-def upload_word_cloud_image():
-    if os.path.exists('/tmp/wc_image_ja.png') is True:
-        print("Upload ImageFile")
-        try:
-            # 格納するGCSのPathを指定
-            blob = bucket.blob("wc_image_ja.png")
-            # ファイルとしてCloud Storageにアップロード
-            blob.upload_from_filename("/tmp/wc_image_ja.png")
         except Exception as exception:
             print(exception)
 
