@@ -1,0 +1,8 @@
+# Function dependencies, for example:
+# package>=version
+requests==2.24.0
+emoji
+google-cloud-language
+google-cloud-storage
+wordcloud
+google-api-python-client==1.11.0
